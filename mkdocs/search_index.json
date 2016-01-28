@@ -1,0 +1,34 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Long Running Refresh Token for REST framework JWT Auth\n\n\nLong running refresh token support for JSON Web Token Authentication support for Django REST Framework\n\n\n\n\nOverview\n\n\nThis package provides a plugin that allow JWT to be re-issued for one that owns refresh token stored on database.\n\n\nRequirements\n\n\n\n\nPython (3.4, 3.5)\n\n\nDjango (1.8, 1.9)\n\n\nDjango REST Framework (3.3)\n\n\n\n\nInstallation\n\n\nInstall using \npip\n...\n\n\n$ pip install djangorestframework-jwt-refresh-token\n\n\n\n\nLong Running Refresh Token\n\n\nThis allows for a client to request refresh tokens. These refresh tokens do not expire.\nThey can be revoked (deleted). When a JWT has expired, it's possible to send a request\nwith the refresh token in the header, and get back a new JWT.\n\n\nIn your \nsettings.py\n, add \nrefreshtoken\n to \nINSTALLED_APPS\n.\n\n\nINSTALLED_APPS = [\n    ...,\n    'refreshtoken',\n  ]\n}\n\n\n\n\nThen run migrate to add the new model.\n\n\npython manage.py migrate refreshtoken\n\n\n\n\nIn your \nurls.py\n add the following URL route to enable obtaining a token via a POST included the user's username and password.\n\n\nConfigure your urls to add new endpoint\n\n\nfrom refreshtoken.routers import urlpatterns as rt_urlpatterns\n\nurlpatterns = [\n    url(...),\n] + rt_urlpatterns\n\n\n\n\n\nYou can include this refresh token in your JWT_RESPONSE_PAYLOAD_HANDLER\n\n\ndef jwt_response_payload_handler(token, user=None, request=None):\n    payload = {\n        'token': token,\n    }\n\n    app = 'test'\n    try:\n        refresh_token = user.refresh_tokens.get(app=app).key\n    except RefreshToken.DoesNotExist:\n        refresh_token = None\n\n    payload['refresh_token'] = refresh_token\n    return payload\n\n\n\n\nThen declare this custom payload_handler in your settings:\n\n\nJWT_AUTH = {\n    ...,\n    'JWT_RESPONSE_PAYLOAD_HANDLER': 'path.to.jwt_response_payload_handler',\n    ...,\n}\n\n\n\n\nThen your user can ask a new JWT token as long as the refresh_token exists.\n\n\n$ http POST client_id=app grant_type=\nurn:ietf:params:oauth:grant-type:jwt-bearer\n refresh_token=\nREFRESH_TOKEN\n api_type=app http://localhost:8000/delegate/\n\n\n\n\n{\ntoken\n: \nyour_jwt_token_...\n, \nrefresh_token\n: \nyour long running refresh token...\n}",
+            "title": "Home"
+        },
+        {
+            "location": "/#long-running-refresh-token-for-rest-framework-jwt-auth",
+            "text": "Long running refresh token support for JSON Web Token Authentication support for Django REST Framework",
+            "title": "Long Running Refresh Token for REST framework JWT Auth"
+        },
+        {
+            "location": "/#overview",
+            "text": "This package provides a plugin that allow JWT to be re-issued for one that owns refresh token stored on database.",
+            "title": "Overview"
+        },
+        {
+            "location": "/#requirements",
+            "text": "Python (3.4, 3.5)  Django (1.8, 1.9)  Django REST Framework (3.3)",
+            "title": "Requirements"
+        },
+        {
+            "location": "/#installation",
+            "text": "Install using  pip ...  $ pip install djangorestframework-jwt-refresh-token",
+            "title": "Installation"
+        },
+        {
+            "location": "/#long-running-refresh-token",
+            "text": "This allows for a client to request refresh tokens. These refresh tokens do not expire.\nThey can be revoked (deleted). When a JWT has expired, it's possible to send a request\nwith the refresh token in the header, and get back a new JWT.  In your  settings.py , add  refreshtoken  to  INSTALLED_APPS .  INSTALLED_APPS = [\n    ...,\n    'refreshtoken',\n  ]\n}  Then run migrate to add the new model.  python manage.py migrate refreshtoken  In your  urls.py  add the following URL route to enable obtaining a token via a POST included the user's username and password.  Configure your urls to add new endpoint  from refreshtoken.routers import urlpatterns as rt_urlpatterns\n\nurlpatterns = [\n    url(...),\n] + rt_urlpatterns  You can include this refresh token in your JWT_RESPONSE_PAYLOAD_HANDLER  def jwt_response_payload_handler(token, user=None, request=None):\n    payload = {\n        'token': token,\n    }\n\n    app = 'test'\n    try:\n        refresh_token = user.refresh_tokens.get(app=app).key\n    except RefreshToken.DoesNotExist:\n        refresh_token = None\n\n    payload['refresh_token'] = refresh_token\n    return payload  Then declare this custom payload_handler in your settings:  JWT_AUTH = {\n    ...,\n    'JWT_RESPONSE_PAYLOAD_HANDLER': 'path.to.jwt_response_payload_handler',\n    ...,\n}  Then your user can ask a new JWT token as long as the refresh_token exists.  $ http POST client_id=app grant_type= urn:ietf:params:oauth:grant-type:jwt-bearer  refresh_token= REFRESH_TOKEN  api_type=app http://localhost:8000/delegate/  { token :  your_jwt_token_... ,  refresh_token :  your long running refresh token... }",
+            "title": "Long Running Refresh Token"
+        }
+    ]
+}
