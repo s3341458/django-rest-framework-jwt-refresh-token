@@ -1,0 +1,5 @@
+site_name: Long Refresh Tokens for Django REST framework JWT
+site_description: Long Refresh Tokens support for JSON Web Token Authentication support for Django REST Framework
+site_dir: html_
+
+repo_url: https://github.com/lock8/django-rest-framework-jwt-refresh-token
