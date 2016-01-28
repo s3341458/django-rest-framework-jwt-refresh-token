@@ -13,6 +13,9 @@ from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/p
 
 ## Changelog
 
+- 0.1.2 / 2016-01-28
+    - Fix packaging
+
 - 0.1.1 / 2016-01-28
     - Fix packaging
 
