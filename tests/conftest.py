@@ -1,3 +1,6 @@
+import pytest
+
+
 def pytest_configure():
     import django
     from django.conf import settings
@@ -51,6 +54,26 @@ def pytest_configure():
                 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
             ),
         },
+        JWT_AUTH={
+            'JWT_ALLOW_REFRESH': True,
+        },
     )
 
     django.setup()
+
+
+@pytest.fixture
+def alice(request, django_user_model):
+    return django_user_model.objects.create_user(
+        username=request.fixturename,
+    )
+
+
+@pytest.fixture
+def refresh_token(request, alice):
+    from refreshtoken.models import RefreshToken
+
+    return RefreshToken.objects.create(
+        app=request.fixturename,
+        user=alice,
+    )

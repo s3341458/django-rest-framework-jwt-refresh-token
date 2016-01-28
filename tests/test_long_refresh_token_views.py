@@ -1,22 +1,12 @@
-from django.conf.urls import url
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from refreshtoken.models import RefreshToken
-from refreshtoken.views import DelegateJSONWebToken, RefreshTokenViewSet
-from rest_framework import routers, status
+from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_jwt import utils
+from refreshtoken.routers import urlpatterns  # noqa
 
 User = get_user_model()
-
-
-router = routers.SimpleRouter()
-router.register(r'refresh-token', RefreshTokenViewSet)
-urlpatterns = router.urls + [
-    url(r'^delegate/$',
-        DelegateJSONWebToken.as_view(),
-        name='delegate-tokens'),
-]
 
 
 class RefreshTokenTestCase(APITestCase):
@@ -47,6 +37,14 @@ class RefreshTokenTestCase(APITestCase):
             kwargs={'key': self.token1.key}
         )
         self.delegate_url = reverse('delegate-tokens')
+        self.user_admin = User.objects.create_user(
+            'adminator', self.email, self.password,
+        )
+        self.user_admin.is_superuser = True
+        self.user_admin.save()
+
+    def test_repr_refresh_token(self):
+        print(self.token)
 
     def test_requires_auth(self):
         response = self.client.get(self.list_url)
@@ -76,6 +74,13 @@ class RefreshTokenTestCase(APITestCase):
             status.HTTP_401_UNAUTHORIZED,
             (response.status_code, response.content)
         )
+
+    def test_get_refresh_token_list_with_admin(self):
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT ' + utils.jwt_encode_handler(
+                utils.jwt_payload_handler(self.user_admin)))
+        response = self.client.get(self.list_url)
+        self.assertEqual(len(response.data), 2)
 
     def test_get_refresh_token_list(self):
         self.client.credentials(
@@ -173,5 +178,39 @@ class RefreshTokenTestCase(APITestCase):
         self.assertEqual(
             response.status_code,
             status.HTTP_400_BAD_REQUEST,
+            (response.status_code, response.content)
+        )
+
+    def test_delegate_jwti_wrong_token(self):
+        data = {
+            'client_id': 'gandolf',
+            'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'refresh_token': 'nope',
+            'api_type': 'app',
+        }
+        response = self.client.post(self.delegate_url,
+                                    data=data,
+                                    format='json')
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_401_UNAUTHORIZED,
+            (response.status_code, response.content)
+        )
+
+    def test_delegate_jwti_inactive_user(self):
+        data = {
+            'client_id': 'gandolf',
+            'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'refresh_token': self.token1.key,
+            'api_type': 'app',
+        }
+        self.user1.is_active = False
+        self.user1.save()
+        response = self.client.post(self.delegate_url,
+                                    data=data,
+                                    format='json')
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_401_UNAUTHORIZED,
             (response.status_code, response.content)
         )
