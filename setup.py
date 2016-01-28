@@ -50,7 +50,7 @@ setup(
     author=author,
     author_email=author_email,
     packages=[package],
-    package_data={'tests': '*.py'},
+    include_package_data=True,
     install_requires=install_requires,
     classifiers=[
         'Development Status :: 4 - Beta',
