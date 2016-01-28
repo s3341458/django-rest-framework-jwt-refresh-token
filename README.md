@@ -7,3 +7,10 @@ from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/p
 [![Build Status](https://travis-ci.org/lock8/django-rest-framework-jwt-refresh-token.svg?branch=master)](https://travis-ci.org/lock8/django-rest-framework-jwt-refresh-token)
 
 [![codecov.io](https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token/coverage.svg?branch=master)](https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token?branch=master)
+
+
+## Changelog
+
+- 0.1.0 / 2016-01-28
+
+    - Initial Release based on https://github.com/GetBlimp/django-rest-framework-jwt/pull/123
