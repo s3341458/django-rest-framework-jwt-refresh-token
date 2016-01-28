@@ -13,6 +13,8 @@ from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/p
 
 ## Changelog
 
-- 0.1.0 / 2016-01-28
+- 0.1.1 / 2016-01-28
+    - Fix packaging
 
+- 0.1.0 / 2016-01-28
     - Initial Release based on https://github.com/GetBlimp/django-rest-framework-jwt/pull/123
