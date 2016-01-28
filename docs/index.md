@@ -5,6 +5,9 @@
     <a href="https://pypi.python.org/pypi/djangorestframework-jwt-refresh-token">
         <img src="https://img.shields.io/pypi/v/djangorestframework-jwt-refresh-token.svg">
     </a>
+    <a href="https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token?branch=master">
+      <img src="https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token/coverage.svg?branch=master">
+    </a>
 </div>
 
 ---
