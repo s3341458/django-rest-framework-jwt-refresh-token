@@ -16,6 +16,9 @@ def pytest_configure():
         SOUTH_TESTS_MIGRATE=False,
         SITE_ID=1,
         SECRET_KEY='not very secret in tests',
+        LANGUAGE_CODE='en-us',
+        TIME_ZONE='UTC',
+        USE_TZ=True,
         USE_I18N=True,
         USE_L10N=True,
         STATIC_URL='/static/',
@@ -45,7 +48,6 @@ def pytest_configure():
         PASSWORD_HASHERS=(
             'django.contrib.auth.hashers.MD5PasswordHasher',
         ),
-        SOUTH_DATABASE_ADAPTERS={'default': 'south.db.sqlite3'},
         REST_FRAMEWORK={
             'DEFAULT_PERMISSION_CLASSES': (
                 'refreshtoken.permissions.IsOwnerOrAdmin',

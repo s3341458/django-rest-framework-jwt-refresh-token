@@ -2,11 +2,38 @@ sudo: false
 language: python
 python:
   - "3.5"
+env:
+  - TOX_ENV=flake8
+  - TOX_ENV=docs
+  - TOX_ENV=py34-django1.8-drf3.3-jwt1.7
+  - TOX_ENV=py34-django1.8-drf3.3-jwt1.8
+  - TOX_ENV=py34-django1.8-drf3.4-jwt1.7
+  - TOX_ENV=py34-django1.8-drf3.4-jwt1.8
+  - TOX_ENV=py34-django1.9-drf3.3-jwt1.7
+  - TOX_ENV=py34-django1.9-drf3.3-jwt1.8
+  - TOX_ENV=py34-django1.9-drf3.4-jwt1.7
+  - TOX_ENV=py34-django1.9-drf3.4-jwt1.8
+  - TOX_ENV=py34-django1.10-drf3.3-jwt1.7
+  - TOX_ENV=py34-django1.10-drf3.3-jwt1.8
+  - TOX_ENV=py34-django1.10-drf3.4-jwt1.7
+  - TOX_ENV=py34-django1.10-drf3.4-jwt1.8
+  - TOX_ENV=py35-django1.8-drf3.3-jwt1.7
+  - TOX_ENV=py35-django1.8-drf3.3-jwt1.8
+  - TOX_ENV=py35-django1.8-drf3.4-jwt1.7
+  - TOX_ENV=py35-django1.8-drf3.4-jwt1.8
+  - TOX_ENV=py35-django1.9-drf3.3-jwt1.7
+  - TOX_ENV=py35-django1.9-drf3.3-jwt1.8
+  - TOX_ENV=py35-django1.9-drf3.4-jwt1.7
+  - TOX_ENV=py35-django1.9-drf3.4-jwt1.8
+  - TOX_ENV=py35-django1.10-drf3.3-jwt1.7
+  - TOX_ENV=py35-django1.10-drf3.3-jwt1.8
+  - TOX_ENV=py35-django1.10-drf3.4-jwt1.7
+  - TOX_ENV=py35-django1.10-drf3.4-jwt1.8
 install:
   - pip install tox codecov
 script:
-  - tox
+  - tox -e $TOX_ENV
 after_success:
-  - codecov
+  - codecov -e $TOX_ENV
 notifications:
   email: false
