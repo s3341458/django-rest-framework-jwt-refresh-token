@@ -35,7 +35,7 @@ version = find_version(package, '__init__.py')
 description = 'Long Refresh Tokens for JSON Web Token based authentication'
 url = 'https://github.com/lock8/django-rest-framework-jwt-refresh-token'
 author = 'Nicolas Delaby'
-author_email = 'nicolas.delaby@lock8.me'
+author_email = 'nicolas@noa.one'
 license = 'MIT'
 install_requires = []
 
@@ -56,6 +56,9 @@ setup(
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
+        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
+        'Framework :: Django :: 1.10',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
