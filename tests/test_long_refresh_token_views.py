@@ -4,7 +4,8 @@ from refreshtoken.models import RefreshToken
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_jwt import utils
-from refreshtoken.routers import urlpatterns  # noqa
+
+from .urls import urlpatterns  # noqa
 
 User = get_user_model()
 
