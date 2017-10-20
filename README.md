@@ -13,6 +13,11 @@ from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/p
 
 ## Changelog
 
+- 0.2 / 2017-10-20
+    - Add compatibility with Django 2.0
+    - Drop Django support below 1.11
+    - Drop DRF support below 3.6
+
 - 0.1.2 / 2016-01-28
     - Fix packaging
 
