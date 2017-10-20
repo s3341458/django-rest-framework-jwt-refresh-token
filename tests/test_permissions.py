@@ -4,7 +4,7 @@ def test_is_admin_or_owner_permission(refresh_token, admin_user, mocker,
 
     request = mocker.Mock()
     anonymous_user = mocker.Mock()
-    anonymous_user.is_authenticated = mocker.Mock(side_effect=[False, False])
+    anonymous_user.is_authenticated = False
     request.user = anonymous_user
 
     backend = IsOwnerOrAdmin()
