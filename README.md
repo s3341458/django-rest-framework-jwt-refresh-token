@@ -10,6 +10,14 @@ from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/p
 [![Build Status](https://travis-ci.org/lock8/django-rest-framework-jwt-refresh-token.svg?branch=master)](https://travis-ci.org/lock8/django-rest-framework-jwt-refresh-token)
 [![codecov.io](https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token/coverage.svg?branch=master)](https://codecov.io/github/lock8/django-rest-framework-jwt-refresh-token?branch=master)
 
+## Usage
+
+For a given long refresh token (stored in DB), POSTing to the `delegate` endpoint will return a new JWT token.
+
+```bash
+http POST client_id=app grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer" refresh_token=<REFRESH_TOKEN> api_type=app http://localhost:8000/delegate/
+'{"token": "your_jwt_token_...", "refresh_token": "your long running refresh token..."}'
+```
 
 ## Changelog
 
