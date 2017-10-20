@@ -1,47 +1,40 @@
 sudo: false
 language: python
-cache:
-  directories:
-    - $XDG_CACHE_HOME/pip
-before_cache:
-  - rm -f $XDG_CACHE_HOME/pip/log/debug.log
-python:
-  - "3.5"
-env:
+cache: pip
+matrix:
   global:
     - XDG_CACHE_HOME=$HOME/.cache
-  matrix:
-    - TOX_ENV=flake8
-    - TOX_ENV=docs
-    - TOX_ENV=py34-django1.8-drf3.3-jwt1.7
-    - TOX_ENV=py34-django1.8-drf3.3-jwt1.8
-    - TOX_ENV=py34-django1.8-drf3.4-jwt1.7
-    - TOX_ENV=py34-django1.8-drf3.4-jwt1.8
-    - TOX_ENV=py34-django1.9-drf3.3-jwt1.7
-    - TOX_ENV=py34-django1.9-drf3.3-jwt1.8
-    - TOX_ENV=py34-django1.9-drf3.4-jwt1.7
-    - TOX_ENV=py34-django1.9-drf3.4-jwt1.8
-    - TOX_ENV=py34-django1.10-drf3.3-jwt1.7
-    - TOX_ENV=py34-django1.10-drf3.3-jwt1.8
-    - TOX_ENV=py34-django1.10-drf3.4-jwt1.7
-    - TOX_ENV=py34-django1.10-drf3.4-jwt1.8
-    - TOX_ENV=py35-django1.8-drf3.3-jwt1.7
-    - TOX_ENV=py35-django1.8-drf3.3-jwt1.8
-    - TOX_ENV=py35-django1.8-drf3.4-jwt1.7
-    - TOX_ENV=py35-django1.8-drf3.4-jwt1.8
-    - TOX_ENV=py35-django1.9-drf3.3-jwt1.7
-    - TOX_ENV=py35-django1.9-drf3.3-jwt1.8
-    - TOX_ENV=py35-django1.9-drf3.4-jwt1.7
-    - TOX_ENV=py35-django1.9-drf3.4-jwt1.8
-    - TOX_ENV=py35-django1.10-drf3.3-jwt1.7
-    - TOX_ENV=py35-django1.10-drf3.3-jwt1.8
-    - TOX_ENV=py35-django1.10-drf3.4-jwt1.7
-    - TOX_ENV=py35-django1.10-drf3.4-jwt1.8
+  include:
+    - env: TOXENV=flake8
+      python: 3.6
+    - env: TOXENV=docs
+      python: 3.6
+    - env: TOXENV=py34-django1.11-drf3.6-jwt1.11
+      python: 3.4
+    - env: TOXENV=py34-django1.11-drf3.7-jwt1.11
+      python: 3.4
+    - env: TOXENV=py35-django1.11-drf3.6-jwt1.11
+      python: 3.5
+    - env: TOXENV=py35-django1.11-drf3.7-jwt1.11
+      python: 3.5
+    - env: TOXENV=py36-django1.11-drf3.6-jwt1.11
+      python: 3.6
+    - env: TOXENV=py36-django1.11-drf3.7-jwt1.11
+      python: 3.6
+    - env: TOXENV=py34-django2.0-drf3.7-jwt1.11
+      python: 3.4
+    - env: TOXENV=py35-django2.0-drf3.7-jwt1.11
+      python: 3.5
+    - env: TOXENV=py36-django2.0-drf3.7-jwt1.11
+      python: 3.6
+
 install:
-  - travis_retry pip install tox codecov
+  - travis_retry pip install tox
 script:
-  - tox -e $TOX_ENV
+  - tox
 after_success:
-  - codecov -e $TOX_ENV
+  - pip install codecov
+  - codecov --required -X gcov --flags ${TOXENV//-/ }
+  - coverage report -m
 notifications:
   email: false

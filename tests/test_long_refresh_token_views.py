@@ -1,5 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 from refreshtoken.models import RefreshToken
 from rest_framework import status
 from rest_framework.test import APITestCase

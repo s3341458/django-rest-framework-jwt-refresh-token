@@ -24,7 +24,11 @@ class RefreshToken(models.Model):
 
     """  # noqa
     key = models.CharField(max_length=40, primary_key=True)
-    user = models.ForeignKey(AUTH_USER_MODEL, related_name='refresh_tokens')
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        related_name='refresh_tokens',
+        on_delete=models.CASCADE,
+    )
     app = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
 
