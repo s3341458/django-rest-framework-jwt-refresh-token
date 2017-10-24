@@ -65,11 +65,11 @@ In your `urls.py` add the following URL route to enable obtaining a token via a 
 Configure your urls to add new endpoint
 
 ```python
-from refreshtoken.routers import urlpatterns as rt_urlpatterns
+from refreshtoken.routers import router as rt_router
 
 urlpatterns = [
     url(...),
-] + rt_urlpatterns
+] + rt_router.urls
 
 ```
 
