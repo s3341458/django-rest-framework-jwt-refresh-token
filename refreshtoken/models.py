@@ -43,5 +43,9 @@ class RefreshToken(models.Model):
     def generate_key(self):
         return binascii.hexlify(os.urandom(20)).decode()
 
+    def revoke(self):
+        self.delete()
+        return self.__class__.objects.create(user=self.user, app=self.app)
+
     def __str__(self):
         return self.key
