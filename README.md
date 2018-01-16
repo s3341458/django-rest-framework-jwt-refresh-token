@@ -21,6 +21,9 @@ http POST client_id=app grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer"
 
 ## Changelog
 
+- 0.3 / 2018-16-01
+    - Add `refresh_token.revoke()` to replace the current refresh token
+
 - 0.2 / 2017-10-20
     - Add compatibility with Django 2.0
     - Drop Django support below 1.11
