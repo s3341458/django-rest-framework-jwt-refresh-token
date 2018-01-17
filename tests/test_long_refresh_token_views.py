@@ -40,6 +40,10 @@ class RefreshTokenTestCase(APITestCase):
             'refreshtoken-detail',
             kwargs={'key': self.token1.key}
         )
+        self.revoke_url = reverse(
+            'refreshtoken-revoke',
+            kwargs={'key': self.token.key}
+        )
         self.delegate_url = reverse('delegate-tokens')
         self.user_admin = User.objects.create_user(
             'adminator', self.email, self.password,
@@ -131,6 +135,31 @@ class RefreshTokenTestCase(APITestCase):
             (response.status_code, response.content)
         )
         response = self.client.delete(self.detail_url1)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_404_NOT_FOUND,
+            (response.status_code, response.content)
+        )
+
+    def test_revoke_refresh_token(self):
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT ' + utils.jwt_encode_handler(
+                utils.jwt_payload_handler(self.user)))
+        response = self.client.post(self.revoke_url)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED,
+            (response.status_code, response.content)
+        )
+        new_rt = self.user.refresh_tokens.get()
+        self.assertEqual(
+            response.data,
+            {'key': new_rt.key,
+             'app': new_rt.app,
+             'user': self.user.pk,
+             'created': new_rt.created.isoformat()[:-6] + 'Z',
+             })
+        response = self.client.post(self.revoke_url)
         self.assertEqual(
             response.status_code,
             status.HTTP_404_NOT_FOUND,

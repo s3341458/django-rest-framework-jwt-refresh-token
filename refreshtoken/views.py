@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.utils.translation import ugettext as _
 from rest_framework import exceptions, generics, mixins, status, viewsets
+from rest_framework.decorators import detail_route
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
@@ -60,6 +61,13 @@ class RefreshTokenViewSet(mixins.RetrieveModelMixin,
             return queryset
         else:
             return queryset.filter(user=self.request.user)
+
+    @detail_route(methods=['post'])
+    def revoke(self, request, key=None):
+        obj = self.get_object()
+        new_rt = obj.revoke()
+        serializer = self.get_serializer(new_rt)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 delegate_jwt_token = DelegateJSONWebToken.as_view()
