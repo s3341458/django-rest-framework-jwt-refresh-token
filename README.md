@@ -20,8 +20,12 @@ http POST client_id=app grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer"
 ```
 
 ## Changelog
+- 0.4 / 2018-01-18
+    - Expose revoke functions as an API action
 
-- 0.3 / 2018-16-01
+        ```POST /refresh_tokens/{key}/revoke/```
+
+- 0.3 / 2018-01-16
     - Add `refresh_token.revoke()` to replace the current refresh token
 
 - 0.2 / 2017-10-20
