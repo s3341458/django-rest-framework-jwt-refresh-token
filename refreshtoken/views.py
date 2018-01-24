@@ -2,7 +2,7 @@ from calendar import timegm
 from datetime import datetime
 
 from django.utils.translation import ugettext as _
-from rest_framework import exceptions, generics, mixins, status, viewsets
+from rest_framework import exceptions, generics, status, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -41,11 +41,7 @@ class DelegateJSONWebToken(generics.CreateAPIView):
                         status=status.HTTP_200_OK)
 
 
-class RefreshTokenViewSet(mixins.RetrieveModelMixin,
-                          mixins.CreateModelMixin,
-                          mixins.DestroyModelMixin,
-                          mixins.ListModelMixin,
-                          viewsets.GenericViewSet):
+class RefreshTokenViewSet(viewsets.ModelViewSet):
     """
     API View that will Create/Delete/List `RefreshToken`.
 
