@@ -1,8 +1,9 @@
 # django-rest-framework-jwt-refresh-token
-Plugin for django-rest-framework-jwt that supports long running refresh tokens https://auth0.com/docs/refresh-token
+
+Plugin for [django-rest-framework-jwt](https://github.com/GetBlimp/django-rest-framework-jwt)
+that supports [long running refresh tokens](https://auth0.com/docs/refresh-token).
 
 [Documentation](https://lock8.github.io/django-rest-framework-jwt-refresh-token/)
-
 
 Work initially done by [Nick Lang](https://github.com/fxdgear)
 from that [pull request](https://github.com/GetBlimp/django-rest-framework-jwt/pull/94).
@@ -20,6 +21,7 @@ http POST client_id=app grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer"
 ```
 
 ## Changelog
+
 - 0.4 / 2018-01-18
     - Expose revoke functions as an API action
 
