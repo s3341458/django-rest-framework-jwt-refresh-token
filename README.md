@@ -22,6 +22,9 @@ http POST client_id=app grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer"
 
 ## Changelog
 
+- 0.5 / 2018-01-25
+    - Make `RefreshTokenViewSet` a `GenericViewSet` to take advantage of schema generation
+
 - 0.4 / 2018-01-18
     - Expose revoke functions as an API action
 
