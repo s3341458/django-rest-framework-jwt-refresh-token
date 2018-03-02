@@ -9,18 +9,6 @@ matrix:
       python: 3.6
     - env: TOXENV=docs
       python: 3.6
-    - env: TOXENV=py34-django1.11-drf3.6-jwt1.11
-      python: 3.4
-    - env: TOXENV=py34-django1.11-drf3.7-jwt1.11
-      python: 3.4
-    - env: TOXENV=py35-django1.11-drf3.6-jwt1.11
-      python: 3.5
-    - env: TOXENV=py35-django1.11-drf3.7-jwt1.11
-      python: 3.5
-    - env: TOXENV=py36-django1.11-drf3.6-jwt1.11
-      python: 3.6
-    - env: TOXENV=py36-django1.11-drf3.7-jwt1.11
-      python: 3.6
     - env: TOXENV=py34-django2.0-drf3.7-jwt1.11
       python: 3.4
     - env: TOXENV=py35-django2.0-drf3.7-jwt1.11
