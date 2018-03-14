@@ -33,8 +33,13 @@ install:
 script:
   - tox
 after_success:
-  - pip install codecov
-  - codecov --required -X gcov --flags ${TOXENV//-/ }
-  - coverage report -m
+  - |
+    if [ "${TOXENV#py}" != "$TOXENV" ]; then
+      pip install codecov
+      coverage report -m || exit
+      flags=${TOXENV//-/ }
+      flags=${flags//./}
+      codecov --required -X gcov --flags $flags || exit
+    fi
 notifications:
   email: false
