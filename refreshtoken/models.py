@@ -49,3 +49,12 @@ class RefreshToken(models.Model):
 
     def __str__(self):
         return self.key
+
+    def __repr__(self):
+        return 'RefreshToken(pk=%r, key=%r, user=%r, app=%r, created=%r)' % (
+            self.pk,
+            self.key,
+            getattr(self, 'user', None),
+            self.app,
+            self.created,
+        )
