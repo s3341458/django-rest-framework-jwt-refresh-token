@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 try:
     from django.urls import reverse
 except ImportError:
     from django.core.urlresolvers import reverse
 from refreshtoken.models import RefreshToken
+from refreshtoken.views import RefreshTokenViewSet
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_jwt import utils
@@ -247,3 +249,12 @@ class RefreshTokenTestCase(APITestCase):
             status.HTTP_401_UNAUTHORIZED,
             (response.status_code, response.content)
         )
+
+
+def test_get_queryset_with_anon_user():
+    class FakeRequest:
+        user = AnonymousUser()
+
+    view = RefreshTokenViewSet()
+    view.request = FakeRequest
+    view.get_queryset()

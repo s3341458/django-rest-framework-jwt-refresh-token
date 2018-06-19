@@ -53,10 +53,10 @@ class RefreshTokenViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super(RefreshTokenViewSet, self).get_queryset()
-        if self.request.user.is_superuser or self.request.user.is_staff:
+        user = self.request.user
+        if user.is_superuser or user.is_staff:
             return queryset
-        else:
-            return queryset.filter(user=self.request.user)
+        return queryset.filter(user__pk=user.pk)
 
     @detail_route(methods=['post'])
     def revoke(self, request, key=None):
