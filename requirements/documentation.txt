@@ -4,22 +4,24 @@
 #
 #    pip-compile --output-file requirements/documentation.txt requirements/documentation.in
 #
-attrs==17.4.0             # via pytest
+atomicwrites==1.1.5       # via pytest
+attrs==18.1.0             # via pytest
 click==6.7                # via mkdocs, pip-tools
 coverage==4.5.1           # via pytest-cov
 first==2.0.1              # via pip-tools
 jinja2==2.10              # via mkdocs
-livereload==2.5.1         # via mkdocs
+livereload==2.5.2         # via mkdocs
 markdown==2.6.11          # via mkdocs
 markupsafe==1.0           # via jinja2
-mkdocs==0.17.2
-pip-tools==1.11.0
+mkdocs==0.17.4
+more-itertools==4.2.0     # via pytest
+pip-tools==2.0.2
 pluggy==0.6.0             # via pytest
-py==1.5.2                 # via pytest
+py==1.5.3                 # via pytest
 pytest-cov==2.5.1
-pytest-django==3.1.2
-pytest-mock==1.7.0
-pytest==3.4.1
+pytest-django==3.3.0
+pytest-mock==1.10.0
+pytest==3.6.1
 pyyaml==3.12              # via mkdocs
-six==1.11.0               # via livereload, pip-tools, pytest
+six==1.11.0               # via livereload, more-itertools, pip-tools, pytest
 tornado==4.5.3            # via livereload, mkdocs
