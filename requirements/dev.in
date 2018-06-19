@@ -1,5 +1,5 @@
 pip-tools
 pytest
-pytest-cov
+pytest-cov>=2.3.0
 pytest-django
 pytest-mock
