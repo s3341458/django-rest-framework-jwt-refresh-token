@@ -166,7 +166,7 @@ class RefreshTokenTestCase(APITestCase):
             (response.status_code, response.content)
         )
 
-    def test_create_refresth_token(self):
+    def test_create_refresh_token(self):
         data = {
             'app': 'gandolf'
         }
