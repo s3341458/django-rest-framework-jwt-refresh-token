@@ -20,6 +20,17 @@ class RefreshTokenSerializer(serializers.ModelSerializer):
         fields = ('key', 'user', 'created', 'app')
         read_only_fields = ('key', 'created')
 
+    def create(self, validated_data):
+        """Override ``create`` to provide a user via request.user by default.
+
+        This is required since the read_only ``user`` field is not included by
+        default anymore since
+        https://github.com/encode/django-rest-framework/pull/5886.
+        """
+        if 'user' not in validated_data:
+            validated_data['user'] = self.context['request'].user
+        return super(RefreshTokenSerializer, self).create(validated_data)
+
 
 class DelegateJSONWebTokenSerializer(serializers.Serializer):
     client_id = serializers.CharField()
