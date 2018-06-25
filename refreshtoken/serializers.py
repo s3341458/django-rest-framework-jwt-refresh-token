@@ -1,6 +1,5 @@
 from django.utils.translation import ugettext as _
-from rest_framework import exceptions
-from rest_framework import serializers
+from rest_framework import exceptions, serializers
 
 from .models import RefreshToken
 

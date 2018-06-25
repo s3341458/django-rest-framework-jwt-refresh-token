@@ -1,16 +1,19 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-from refreshtoken.models import RefreshToken
-from refreshtoken.views import RefreshTokenViewSet
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_jwt import utils
 
+from refreshtoken.models import RefreshToken
+from refreshtoken.views import RefreshTokenViewSet
+
 from .urls import urlpatterns  # noqa
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+
 
 User = get_user_model()
 
