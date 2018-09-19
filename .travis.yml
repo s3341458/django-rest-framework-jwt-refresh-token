@@ -29,6 +29,10 @@ matrix:
       python: 3.6
     - env: TOXENV=py36-django2.0-drf3.8-jwt1.11
       python: 3.6
+    - env: TOXENV=py37-django2.1-drf3.8-jwt1.11
+      python: 3.7
+      dist: xenial
+      sudo: true
 
 install:
   - travis_retry pip install tox
