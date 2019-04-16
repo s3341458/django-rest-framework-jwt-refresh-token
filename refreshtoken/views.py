@@ -2,12 +2,12 @@ from calendar import timegm
 from datetime import datetime
 
 from django.utils.translation import ugettext as _
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import exceptions, generics, status, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
+from rest_framework.authentication import BasicAuthentication
 
 from .models import RefreshToken
 from .serializers import DelegateJSONWebTokenSerializer, RefreshTokenSerializer
@@ -23,11 +23,10 @@ class DelegateJSONWebToken(generics.CreateAPIView):
     is valid.
     """
     permission_classes = [AllowAny]
+    authentication_classes = (BasicAuthentication)
     serializer_class = DelegateJSONWebTokenSerializer
 
-    @csrf_exempt
     def post(self, request, *args, **kwargs):
-        print('debug here csrf exempt')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
