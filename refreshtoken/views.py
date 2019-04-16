@@ -23,7 +23,7 @@ class DelegateJSONWebToken(generics.CreateAPIView):
     is valid.
     """
     permission_classes = [AllowAny]
-    authentication_classes = (BasicAuthentication)
+    authentication_classes = [BasicAuthentication]
     serializer_class = DelegateJSONWebTokenSerializer
 
     def post(self, request, *args, **kwargs):
