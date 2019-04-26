@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf import settings
 
-from django.db.models.loading import get_model
+from django.apps import apps
 
 
 # Prior to Django 1.5, the AUTH_USER_MODEL setting does not exist.
@@ -10,7 +10,7 @@ from django.db.models.loading import get_model
 # See: https://github.com/tomchristie/django-rest-framework/issues/1297
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
-User = get_model(*AUTH_USER_MODEL.split('.', 1))
+User = apps.get_model(*AUTH_USER_MODEL.split('.', 1))
 
 
 def revoke_refresh_tokens(modelAdmin, request, queryset):
