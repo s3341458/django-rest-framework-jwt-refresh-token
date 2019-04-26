@@ -8,7 +8,9 @@ from django.apps import apps
 # Note that we don't perform this code in the compat module due to
 # bug report #1297
 # See: https://github.com/tomchristie/django-rest-framework/issues/1297
+
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
 
 User = apps.get_model(*AUTH_USER_MODEL.split('.', 1))
 
