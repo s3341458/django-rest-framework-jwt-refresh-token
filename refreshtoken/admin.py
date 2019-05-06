@@ -25,7 +25,6 @@ def revoke_refresh_tokens(modelAdmin, request, queryset):
 revoke_refresh_tokens.short_description = 'Revoke selected tokens'
 
 
-@admin.register(RefreshToken)
 class RefreshTokenAdmin(admin.ModelAdmin):
     readonly_fields = ['user', 'key', 'app']
     list_display = ['user', 'key']
