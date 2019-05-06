@@ -1,6 +1,6 @@
-from django_webtest import WebTest
 from django.contrib.admin import AdminSite
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
 from refreshtoken.models import RefreshToken
 from refreshtoken.admin import RefreshTokenAdmin, revoke_refresh_tokens
@@ -13,28 +13,22 @@ class MockRequest:
         self.user = user
 
 
-class AdminSiteTest(WebTest):
+class AdminSiteTest(TestCase):
     def setUp(self):
         self.password = 'arandompassword'
-        test_users_info = [
-            ('a@example.com', 'usera', self.password),
-            ('b@example.com', 'userb', self.password),
-            ('c@example.com', 'userc', self.password),
-        ]
 
-        self.users = []
-
-        for user_info in test_users_info:
-            user = User.objects.create_user(*user_info)
-            user.is_superuser = True
-            user.save()
-            self.users.append(user)
-            RefreshToken.objects.create(user=user, app='test-app')
+        user = User.objects.create_user(
+            'admin@example.com', 'user', self.password
+        )
+        user.is_superuser = True
+        user.save()
+        self.user = user
+        RefreshToken.objects.create(user=user, app='test-app')
 
         self.admin = RefreshTokenAdmin(
             model=RefreshToken, admin_site=AdminSite()
         )
-        self.request = MockRequest(self.users[0])
+        self.request = MockRequest(self.user)
 
     def test_refresh_token_admin_fields(self):
         self.assertEqual(
@@ -54,14 +48,14 @@ class AdminSiteTest(WebTest):
         )
 
     def test_self_admin_actions(self):
-        refresh_token = RefreshToken(user=self.users[0], app='local')
+        refresh_token = RefreshToken(user=self.user, app='local')
         refresh_token.save()
         previous_token = refresh_token.key
         revoke_refresh_tokens(
             self.admin, self.request,
-            RefreshToken.objects.filter(user=self.users[0])
+            RefreshToken.objects.filter(user=self.user)
         )
-        refresh_token = RefreshToken.objects.filter(user=self.users[0]).first()
+        refresh_token = RefreshToken.objects.filter(user=self.user).first()
         self.assertNotEqual(
             previous_token, refresh_token.key,
             'Refresh tokens did not revoked after revoke action'

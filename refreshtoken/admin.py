@@ -1,5 +1,3 @@
-from .models import RefreshToken
-
 from django.contrib import admin
 from django.conf import settings
 
