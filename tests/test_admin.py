@@ -47,7 +47,10 @@ class AdminSiteTest(TestCase):
             'All refresh_token fields in admin should all be readonly'
         )
 
-    def test_self_admin_actions(self):
+    def test_admin_has_token_revoke_action(self):
+        self.assertEqual(self.admin.actions, [revoke_refresh_tokens])
+
+    def test_admin_token_revoke_action(self):
         refresh_token = RefreshToken(user=self.user, app='local')
         refresh_token.save()
         previous_token = refresh_token.key
