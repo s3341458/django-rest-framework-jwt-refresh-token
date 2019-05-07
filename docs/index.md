@@ -62,7 +62,7 @@ python manage.py migrate refreshtoken
 In your `urls.py` add the following URL route to enable obtaining a token via a POST included the user's username and password.
 
 
-Configure your urls to add new endpoint
+Configure your urls to add new endpoint for refreshtoken management
 
 ```python
 from refreshtoken.routers import router as rt_router
@@ -99,6 +99,17 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'path.to.jwt_response_payload_handler',
     ...,
 }
+```
+
+Configure your urls to add new endpoint for requesting new JWT token.
+
+```python
+from refreshtoken.views import delegate_jwt_token
+
+urlpatterns = [
+    url(...),
+] + [url(r'^delegate/$', delegate_jwt_token, name='delegate-tokens')]
+
 ```
 
 Then your user can ask a new JWT token as long as the refresh_token exists.
